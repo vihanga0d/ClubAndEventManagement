@@ -98,3 +98,71 @@ form[hidden] { display: none; }
   .card { padding: 24px 20px; }
 }
 @media (max-width: 420px) { .row { grid-template-columns: 1fr; } }
+
+/* ----------------------------------------------------------
+   CampusFlow login/register: two-image animated backdrop
+   Each image is visible for ~20 seconds; crossfade lasts 1 second.
+   Both image layers pan smoothly back and forth independently.
+   ---------------------------------------------------------- */
+.shell .auth {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+.shell .auth::before,
+.shell .auth::after {
+  content: "";
+  position: absolute;
+  inset: -4% -8%;
+  z-index: 0;
+  pointer-events: none;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* Opacity and movement are separate animations. */
+  animation:
+    campusCrossfade 40s linear infinite,
+    campusPan 12s ease-in-out infinite alternate;
+}
+
+.shell .auth::before {
+  background-image:
+    linear-gradient(rgba(9, 17, 38, .25), rgba(9, 17, 38, .25)),
+    url("../images/campus-1.png");
+}
+
+.shell .auth::after {
+  background-image:
+    linear-gradient(rgba(9, 17, 38, .25), rgba(9, 17, 38, .25)),
+    url("../images/campus-2.png");
+  /* Offset only the fade timing: the other image appears halfway through. */
+  animation-delay: -20s, 0s;
+}
+
+.shell .auth > .box {
+  position: relative;
+  z-index: 1;
+}
+
+/* 19 seconds fully shown + 1-second crossfade, per image. */
+@keyframes campusCrossfade {
+  0%    { opacity: 1; }
+  47.5% { opacity: 1; }
+  50%   { opacity: 0; }
+  97.5% { opacity: 0; }
+  100%  { opacity: 1; }
+}
+
+/* 12 seconds traveling one way, then 12 seconds back. */
+@keyframes campusPan {
+  from { transform: translateX(-3%); }
+  to   { transform: translateX(3%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shell .auth::before,
+  .shell .auth::after { animation: none; }
+  .shell .auth::after { display: none; }
+}
