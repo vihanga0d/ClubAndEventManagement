@@ -384,7 +384,12 @@ input:focus, select:focus, textarea:focus { border-color: var(--violet); box-sha
 .shell .features span { color: #E0E7FF; font-size: 14.5px; }
 .shell .ico { width: 44px; height: 44px; border-radius: 12px; color: var(--yellow); background: rgb(255 255 255 / 16%); }
 .shell .foot { color: #E0E7FF; }
-.shell .auth { background: var(--bg); align-items: center; }
+.shell .auth {
+  background:
+    linear-gradient(rgb(9 17 38 / 25%), rgb(9 17 38 / 25%)),
+    url("../images/campus-1.png") center / cover no-repeat;
+  align-items: center;
+}
 .shell .card { border: 1px solid var(--border); border-top: 5px solid var(--violet); border-radius: 18px; background: var(--surface); color: var(--text); box-shadow: var(--shadow-md); padding: 36px; }
 .shell .tabs { background: var(--tint-indigo); border: 1px solid #C7D2FE; border-radius: 12px; }
 .shell .tab { color: #475569; font-weight: 700; border-radius: 9px; }

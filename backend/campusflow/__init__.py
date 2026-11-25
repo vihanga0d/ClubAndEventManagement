@@ -20,10 +20,15 @@ def create_app(test_config=None):
     load_dotenv(Path(__file__).resolve().parents[2] / ".env")
     if not test_config and not os.getenv("SECRET_KEY"):
         raise RuntimeError("Set SECRET_KEY in the environment before starting CampusFlow.")
+    database_url = os.getenv("DATABASE_URL", "sqlite:///campusflow.db")
+    # Railway provides MySQL URLs with the `mysql://` scheme. Use the
+    # installed PyMySQL driver explicitly so SQLAlchemy can connect.
+    if database_url.startswith("mysql://"):
+        database_url = "mysql+pymysql://" + database_url[len("mysql://"):]
     app = Flask(__name__, static_folder="../../frontend", static_url_path="")
     app.config.from_mapping(
         SECRET_KEY=os.getenv("SECRET_KEY", "test-only-key"),
-        SQLALCHEMY_DATABASE_URI=os.getenv("DATABASE_URL", "sqlite:///campusflow.db"),
+        SQLALCHEMY_DATABASE_URI=database_url,
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
         SESSION_COOKIE_HTTPONLY=True,
         SESSION_COOKIE_SAMESITE="Lax",
