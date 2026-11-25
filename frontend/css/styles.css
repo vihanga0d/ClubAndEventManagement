@@ -456,6 +456,36 @@ input:focus, select:focus, textarea:focus { border-color: var(--violet); box-sha
 }
 @media (max-width: 359px) { .stats { grid-template-columns: 1fr; } }
 
+/* Keep the campus photo visible as a banner on phones and small tablets. */
+@media (max-width: 900px) {
+  .shell .auth {
+    align-items: flex-start;
+    padding: 220px 18px 32px;
+    background: var(--bg);
+  }
+  .shell .auth::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 200px;
+    background:
+      linear-gradient(rgb(9 17 38 / 25%), rgb(9 17 38 / 25%)),
+      url("../images/campus-1.png") center 42% / cover no-repeat;
+    pointer-events: none;
+  }
+  .shell .auth > .box {
+    position: relative;
+    z-index: 1;
+  }
+  .shell .mobile-logo {
+    position: absolute;
+    top: -190px;
+    left: 0;
+    color: #fff;
+    text-shadow: 0 1px 5px rgb(9 17 38 / 60%);
+  }
+}
+
 /* ---------- 15. Alignment fixes (cards, action rows, sidebar footer) ---------- */
 
 /* Cards: no stray top/bottom space from the first/last child */
