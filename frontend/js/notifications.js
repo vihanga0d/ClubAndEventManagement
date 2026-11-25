@@ -4,7 +4,7 @@
   const list = $('notificationsList');
   const summary = $('unreadCount');
   const markAll = $('markAllRead');
-  const date = (value) => new Date(value).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+  const date = (value) => new Date(value).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Colombo' });
   const localTarget = (target) => {
     if (!target) return '';
     try {

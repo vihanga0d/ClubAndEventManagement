@@ -7,7 +7,7 @@
   let pendingRequests = 0;
   let announcements = [];
   let notifications = { notifications: [], unreadCount: 0 };
-  const dateTime = (value) => value ? new Date(value).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }) : '';
+  const dateTime = (value) => value ? new Date(value).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Colombo' }) : '';
 
   $('todayDate').textContent = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
 

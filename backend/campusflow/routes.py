@@ -17,6 +17,12 @@ def response_error(message, status, code):
     return jsonify(error={"code": code, "message": message}), status
 
 
+def utc_isoformat(value):
+    if value.tzinfo is None:
+        value = value.replace(tzinfo=timezone.utc)
+    return value.astimezone(timezone.utc).isoformat()
+
+
 def current_user():
     user_id = session.get("user_id")
     return db.session.get(User, user_id) if user_id else None
@@ -835,7 +841,7 @@ def list_announcements():
         query = query.filter(db.or_(Announcement.club_id.is_(None), Announcement.club_id.in_(club_ids)))
     rows = query.order_by(Announcement.created_at.desc()).limit(100).all()
     return jsonify(announcements=[{"id": a.id, "clubId": a.club_id, "title": a.title, "body": a.body,
-                                   "createdAt": a.created_at.isoformat()} for a in rows])
+                                   "createdAt": utc_isoformat(a.created_at)} for a in rows])
 
 
 @api.post("/announcements")
@@ -898,7 +904,7 @@ def list_notifications():
     items = list(rows)
     return jsonify(notifications=[{"id": n.id, "title": n.title, "body": n.body,
                                   "targetUrl": n.target_url, "read": n.read_at is not None,
-                                  "createdAt": n.created_at.isoformat()} for n in items],
+                                  "createdAt": utc_isoformat(n.created_at)} for n in items],
                    unreadCount=Notification.query.filter_by(user_id=current_user().id, read_at=None).count())
 
 
