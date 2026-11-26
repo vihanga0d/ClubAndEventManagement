@@ -88,6 +88,7 @@ The frontend communicates with the Flask backend through REST-style JSON API end
 | Himath | Developer |
 | Shamika | Developer |
 | Vihanga | Developer |
+| Daafir | Developer |
 | Dileepa | Quality Assurance (QA) |
 | Malith | DevOps |
 | Dilshan | Stakeholder |
